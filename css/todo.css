@@ -1,0 +1,11 @@
+.done-true {
+  text-decoration: line-through;
+  color: grey;
+}
+.scenario {
+  margin: 10px;
+  padding:2px;
+}
+.dropdown{
+	float:right;
+}

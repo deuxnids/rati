@@ -1,0 +1,108 @@
+<!doctype html>
+<html >
+  <head>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.17/angular.min.js"></script>
+    -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/angular.min.js"></script>
+
+    <script src="js/bootstrap.min.js"></script>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/todo.css" rel="stylesheet">
+
+    <script src="js/todo.js"></script>
+    <script src="js/runner.js"></script>
+
+  </head>
+  <body>
+  <div class="container">
+      <div class="page-header">
+        <h1>Marchethon St-Leonard 2014</h1>
+        <p class="lead">Donner le souffle de vie.</p>
+      </div>
+
+      <div ng-app="marchethon">
+        <div ng-controller="RaceController as raceCtrl">
+          <div ng-controller="RunnerController as runnerCtrl">
+
+<section>
+ <ul class="nav nav-pills">
+  <li> <a ng-click="tab= 1"> Races</a> </li>
+  <li> <a ng-click="tab= 2"> Not yet </a> </li>
+  <li> <a ng-click="tab= 3"> Runners</a> </li>
+</ul>
+{{tab}}
+</section>
+
+          <form ng-submit="raceCtrl.addTodo()">
+            <input type="text" ng-model="raceCtrl.todoText"  size="30"
+                   placeholder="add new todo here">
+            <input class="btn-primary" type="submit" value="start">
+          </form>
+          
+          <h2> Races </h2>
+          <div class="row">
+            <div class="container">
+              <div class="col-md-3 jumbotron scenario" ng-repeat="race in raceCtrl.races | filter:search " >
+                <h4> 
+                  {{race.name}} 
+                </h4>
+                {{race.start_time | date:"medium"}}
+                <div ng-show="race.start_time===null">
+                  <button ng-click="raceCtrl.startRace(race)">Start</button>
+                </div>
+                <div ng-show="race.start_time!==null">
+                  <button ng-click="raceCtrl.stopRace(race)">Stop</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+          <h2> Temps pas attribues </h2>
+          <div class="row">
+          <button ng-click="raceCtrl.addArrivalTime(race)">New arrival</button>
+
+            <div class="container">
+              
+              <div class="col-md-3 jumbotron scenario" ng-repeat="arrival in raceCtrl.arrivals" >
+                  {{arrival.arrival_time | date}}, {{arrival.runner }} 
+                  <form ng-submit="raceCtrl.addRunnerToTime(arrival, runner_code, runnerCtrl)">
+                  <input type="text" ng-model="runner_code"  size="30"
+                   placeholder="add runner code here">
+                  <input class="btn-primary" type="submit" value="attribute">
+                </form>
+              </div>
+
+            </div>
+          </div>
+
+
+          <h2> Runners </h2>
+
+          <div class="row">
+
+            <div class="container">
+              
+              <div class="col-md-3 jumbotron scenario" ng-repeat="runner in runnerCtrl.runners" >
+                  {{ runner.name}}     {{ runner.code}}                   {{ runner.stop_time}}
+
+
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+
+        </div>
+        </div>
+
+      </div>
+    </div> <!-- /container -->
+  </body>
+</html>
